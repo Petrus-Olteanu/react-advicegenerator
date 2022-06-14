@@ -1,34 +1,23 @@
-import{useState, useEffect} from "react"; 
+import React, { useEffect, useState } from 'react';
 import styles from "./card.module.css";
+import {IAdvice} from "../../App";
+import divider from "../../assets/img/pattern-divider-desktop.svg"
 
-interface IAdvice{
-    text:string | null,
-    id:number | null
+
+interface ICard {
+    advice: IAdvice
 }
 
 
+const Card: React.FC<ICard> = ({advice}) => {
 
-
-
-const Card = () => {
-    const [advice, setAdvice] = useState<IAdvice>({text: null, id:null})
-
-    useEffect(()=>{
-        fetch("https://api.adviceslip.com/advice")
-        .then(res=>res.json())
-        .then(data=>{
-            setAdvice({
-                text:data.slip.advice,
-                id: data.slip.id
-            })
-        })
-    },[])
-  return (
-    <div>
-        <h2>{advice.id}</h2>
-        <h2>"{advice.text}"</h2>
-    </div>
-  )
+    return (
+        <div className={styles.advice__container}>
+            <h2 className={styles.advice}>ADVICE #{advice.id}</h2>
+            <h2 className={styles.text}>"{advice.text}"</h2>
+            <img src={divider} alt="dividerImg" className={styles.cardImg}/>
+        </div>
+    )
 }
 
 export default Card
